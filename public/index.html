@@ -29,15 +29,15 @@
 
             axios
                 .post ('/api/students', {name: nameInput.value })
-        };  
-        .then(res => {
-    container.innerHTML = ''
-    nameInput.value = ''
+          
+                .then(res => {
+                container.innerHTML = ''
+                nameInput.value = ''
 
-    res.data.forEach((studentName) => {
-        container.innerHTML += `<p>${studentName}</p>`
-    })
-})
+                res.data.forEach((studentName) => {
+                container.innerHTML += `<p>${studentName}</p>`
+                })
+             })
 .catch(err => {
     nameInput.value = ''
 
@@ -52,6 +52,7 @@
         })
     })
 })
+};
 
         addForm.addEventListener('submit', submitHandler)
     </script>

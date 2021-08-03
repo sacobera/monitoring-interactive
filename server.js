@@ -11,7 +11,7 @@ var rollbar = new Rollbar({
 });
 
 // record a generic message and send it to Rollbar
-rollbar.log("Hello world!");
+// rollbar.log("Hello world!");
 
 
 app.use(express.json());
@@ -33,18 +33,19 @@ app.get('/', function(Req, res){
 
 app.post('/api/pets', function(req, res){
     let {name} = req.body; 
-    // console.log(name)
+    console.log(name)
 
-    const index = pets.findIndex((pet) => {
+                  //array name.findIndex(call it pet)
+    const index = pet.findIndex((pet) => {
         return pet === name
     
     })
 
     try {
         if (index === -1 && name !== "") {
-          pets.push(name);
+          pet.push(name);
           rollbar.info('A new pet is added!')
-          res.status(200).send(pets);
+          res.status(200).send(pet);
         } else if (name === "") {
             rollbar.critical('Someone tried to enter a blank pet name')
           res.status(400).send("must provide a name");
@@ -63,5 +64,5 @@ app.post('/api/pets', function(req, res){
 const port = process.env.PORT || 5050;
 
 app.listen(port, function() {
-    console.log('Server rocking out on ${port}')
+    console.log(`Server rocking out on ${port}`)
 })

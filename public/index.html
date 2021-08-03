@@ -1,60 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        Pet List 
-    </title>
-</head>
-<body>
-    <h1> Pet List</h1>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pet List</title>
+  </head>
+  <body>
+    <h1>Pet List</h1>
     <form>
-        <input type='text' placeholder='type a pet name here...'/>
-        <button> add a pet</button>
+      <input type="text" placeholder="type a pet name here..." />
+      <button type="submit">add a pet</button>
     </form>
-    <section> </section>
+    <section></section>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 
     <script>
-        const addForm = document.querySelector('form');
-        const nameInput = document.querySelector('input');
-        const container =document.querySelector('section');
+      const addForm = document.querySelector("form");
+      const nameInput = document.querySelector("input");
+      const container = document.querySelector("section");
 
-        function submitHandler(evt) {
-            evt.preventDefault();
-            // console.log('hey');
+      function submitHandler(evt) {
+        evt.preventDefault();
+        console.log("hit");
 
-            axios
-                .post ('/api/pets', {name: nameInput.value })
-          
-                .then(res => {
-                container.innerHTML = ''
-                nameInput.value = ''
+        axios
+          .post("/api/pets", { name: nameInput.value })
 
-                res.data.forEach((petName) => {
-                container.innerHTML += `<p>${petName}</p>`
-                })
-             })
-.catch(err => {
-    nameInput.value = ''
+          .then((res) => {
+            container.innerHTML = "";
+            nameInput.value = "";
 
-    const notif = document.createElement('aside')
-    notif.innerHTML = `<p>${err.response.data}</p>
-    <button class="close">close</button>`
-    document.body.appendChild(notif)
+            res.data.forEach((petName) => {
+              container.innerHTML += `<p>${petName}</p>`;
+            });
+          })
+          .catch((err) => {
+            nameInput.value = "";
 
-    document.querySelectorAll('.close').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.target.parentNode.remove()
-        })
-    })
-})
-};
+            const notif = document.createElement("aside");
+            notif.innerHTML = `<p>${err.response.data}</p>
+    <button class="close">close</button>`;
+            document.body.appendChild(notif);
 
-        addForm.addEventListener('submit', submitHandler)
+            document.querySelectorAll(".close").forEach((btn) => {
+              btn.addEventListener("click", (e) => {
+                e.target.parentNode.remove();
+              });
+            });
+          });
+      }
+
+      addForm.addEventListener("submit", submitHandler);
     </script>
-</body>
+  </body>
 </html>

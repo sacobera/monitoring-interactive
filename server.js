@@ -11,7 +11,7 @@ var rollbar = new Rollbar({
 });
 
 // record a generic message and send it to Rollbar
-// rollbar.log("Hello world!");
+rollbar.log("Hello world!");
 
 
 app.use(express.json());
@@ -19,9 +19,16 @@ app.use(express.json());
 //student data
 const pet = ['Alfalfa', 'Kitty', 'Tucker']
 
+// //bad endpoint for testing
+// app.get('/', function(req, res){
+//   res.path.join.(--dirnamee)
+// })
+
+
 //endpoints
 app.get('/', function(Req, res){
     res.sendFile(path.join(__dirname, '/public/index.html'))
+    
 })
 
 app.post('/api/pets', function(req, res){
@@ -37,13 +44,13 @@ app.post('/api/pets', function(req, res){
         if (index === -1 && name !== "") {
           pets.push(name);
           rollbar.info('A new pet is added!')
-          res.status(200).send(students);
+          res.status(200).send(pets);
         } else if (name === "") {
-            rollbar.error('Someone tried to enter a blank pet name')
+            rollbar.critical('Someone tried to enter a blank pet name')
           res.status(400).send("must provide a name");
           
         } else {
-            rollbar.error('Someone tried tp enter a duplicate pet name')
+            rollbar.warning('Someone tried to enter a duplicate pet name')
           res.status(400).send("that pet already exists");
         }
       } catch (err) {

@@ -5,14 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
-        Student List 
+        Pet List 
     </title>
 </head>
 <body>
-    <h1> Student List</h1>
+    <h1> Pet List</h1>
     <form>
-        <input type='text' placeholder='type a student name here...'/>
-        <button> add student</button>
+        <input type='text' placeholder='type a pet name here...'/>
+        <button> add a pet</button>
     </form>
     <section> </section>
 
@@ -28,14 +28,14 @@
             // console.log('hey');
 
             axios
-                .post ('/api/students', {name: nameInput.value })
+                .post ('/api/pets', {name: nameInput.value })
           
                 .then(res => {
                 container.innerHTML = ''
                 nameInput.value = ''
 
-                res.data.forEach((studentName) => {
-                container.innerHTML += `<p>${studentName}</p>`
+                res.data.forEach((petName) => {
+                container.innerHTML += `<p>${petName}</p>`
                 })
              })
 .catch(err => {

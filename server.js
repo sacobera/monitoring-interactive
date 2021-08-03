@@ -11,37 +11,44 @@ var rollbar = new Rollbar({
 });
 
 // record a generic message and send it to Rollbar
-rollbar.log("Hello world!");
+// rollbar.log("Hello world!");
+
 
 app.use(express.json());
 
 //student data
-const student = ['jim', 'timothy', 'jimothy']
+const pet = ['Alfalfa', 'Kitty', 'Tucker']
 
 //endpoints
 app.get('/', function(Req, res){
     res.sendFile(path.join(__dirname, '/public/index.html'))
 })
 
-app.post('/api/students', function(req, res){
+app.post('/api/pets', function(req, res){
     let {name} = req.body; 
     // console.log(name)
 
-    const index = students.findIndex((student) => {
-        return student === name
+    const index = pets.findIndex((pet) => {
+        return pet === name
     
     })
 
     try {
         if (index === -1 && name !== "") {
-          students.push(name);
+          pets.push(name);
+          rollbar.info('A new pet is added!')
           res.status(200).send(students);
         } else if (name === "") {
+            rollbar.error('Someone tried to enter a blank pet name')
           res.status(400).send("must provide a name");
+          
         } else {
-          res.status(400).send("that student already exists");
+            rollbar.error('Someone tried tp enter a duplicate pet name')
+          res.status(400).send("that pet already exists");
         }
       } catch (err) {
+          console.log(err)
+          rollbar.error(err)
         // do something
       }
 })
